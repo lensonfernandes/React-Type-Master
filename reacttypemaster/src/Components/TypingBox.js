@@ -12,13 +12,19 @@ function TypingBox({words}) {
               {
                 words.map((word, index)=>{return (
                   <span className='word'>
-                      {word}
+                      {word.split("").map((char, idx)=>(
+                        <span className='char'>{char}</span>
+                      ))}
                   </span>
                 )})
               }
           </div>
         </div>
 
+        <input 
+          type="text"
+          className='hidden-input'
+        />
     </>
   )
 }
