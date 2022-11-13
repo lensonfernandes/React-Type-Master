@@ -9,7 +9,7 @@ function TypingBox({ words }) {
   const wordSpanRef = Array(words.length)
     .fill(0)
     .map((i) => createRef(null));
-  console.log(inputTextRef);
+  // console.log(inputTextRef);
 
   const handleKeyDown = (e) => {
     let allChildrenSpans =
@@ -22,7 +22,7 @@ function TypingBox({ words }) {
 
     //Space code
 
-    console.log(e);
+    // console.log(e);
 
     if (e.keyCode === 32) {
 
@@ -69,6 +69,17 @@ function TypingBox({ words }) {
       
 
       return ;
+    }
+
+    if(currCharIndex === allChildrenSpans.length){
+      let newSpan = document.createElement('span');   //returns new Span
+      newSpan.innerText = e.key;
+      newSpan.className = 'char incorrect right extra';
+      allChildrenSpans[currCharIndex-1].className = allChildrenSpans[currCharIndex-1].className.replace('right', " ");
+
+      wordSpanRef[currWordIndex].current.append(newSpan);
+      setCurrCharIndex(currCharIndex+1);
+      return;
     }
 
     //Incorrect and Correct code
