@@ -48,6 +48,29 @@ function TypingBox({ words }) {
 
     //Backspace code
 
+
+    if(e.keyCode === 8){
+
+      if(currCharIndex !== 0){
+
+        if(currCharIndex === allChildrenSpans.length)
+        {
+          allChildrenSpans[currCharIndex-1].className = 'char current'
+          setCurrCharIndex(currCharIndex -1);
+          return;
+        }
+        allChildrenSpans[currCharIndex].className = 'char';
+        allChildrenSpans[currCharIndex-1].className = 'char current';
+        setCurrCharIndex(currCharIndex -1)
+      }
+       
+
+      
+      
+
+      return ;
+    }
+
     //Incorrect and Correct code
 
     if (e.key === allChildrenSpans[currCharIndex].innerText) {
@@ -74,6 +97,7 @@ function TypingBox({ words }) {
     focusInput();
     wordSpanRef[0].current.childNodes[0].className = "char current";
   }, []);
+
   return (
     <>
       <div className="type-box" onClick={focusInput}>
@@ -84,7 +108,7 @@ function TypingBox({ words }) {
             return (
               <span className="word" ref={wordSpanRef[index]} key={index}>
                 {word.split("").map((char, idx) => (
-                  <span className="char">{char}</span>
+                  <span className="char" key={`char${idx}`}>{char}</span>
                 ))}
               </span>
             );
