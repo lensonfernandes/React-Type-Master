@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, createRef, useState } from "react";
+import UpperMenu from "./UpperMenu";
 
 function TypingBox({ words }) {
   const [currWordIndex, setCurrWordIndex] = useState(0);
@@ -155,7 +156,7 @@ if(!testStart){
 
   return (
     <>
-    <h1>{countDown}</h1>
+    <UpperMenu countDown={countDown} />
     {testOver ? <h1>TestOver</h1> : (<div className="type-box" onClick={focusInput}>
         <div className="words">
           {/* Spans of words and chars */}
