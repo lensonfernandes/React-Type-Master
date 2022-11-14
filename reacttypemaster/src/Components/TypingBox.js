@@ -4,6 +4,8 @@ function TypingBox({ words }) {
   const [currWordIndex, setCurrWordIndex] = useState(0);
   const [currCharIndex, setCurrCharIndex] = useState(0);
   const [countDown, setCountDown] = useState(15)
+  const [testStart, setTestStart] = useState(false)
+  const [testOver, setTestOver] = useState(false);
 
   const inputTextRef = useRef(null);
 
@@ -24,6 +26,7 @@ const  startTimer = () => {
       {
         clearInterval(intervalId);
         setCountDown(0)
+        setTestOver(true)
       }
       else{
         return prevCount-1;
@@ -37,8 +40,11 @@ const  startTimer = () => {
 
 
   const handleKeyDown = (e) => {
-
-      startTimer();
+if(!testStart){
+   startTimer();
+   setTestStart(true);
+}
+     
 
     let allChildrenSpans =
       wordSpanRef[currWordIndex].current.querySelectorAll("span");
@@ -150,7 +156,7 @@ const  startTimer = () => {
   return (
     <>
     <h1>{countDown}</h1>
-      <div className="type-box" onClick={focusInput}>
+    {testOver ? <h1>TestOver</h1> : (<div className="type-box" onClick={focusInput}>
         <div className="words">
           {/* Spans of words and chars */}
 
@@ -164,7 +170,8 @@ const  startTimer = () => {
             );
           })}
         </div>
-      </div>
+      </div>)}
+      
 
       <input
         type="text"
