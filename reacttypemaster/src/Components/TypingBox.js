@@ -3,6 +3,7 @@ import React, { useRef, useEffect, createRef, useState } from "react";
 function TypingBox({ words }) {
   const [currWordIndex, setCurrWordIndex] = useState(0);
   const [currCharIndex, setCurrCharIndex] = useState(0);
+  const [countDown, setCountDown] = useState(15)
 
   const inputTextRef = useRef(null);
 
@@ -11,7 +12,34 @@ function TypingBox({ words }) {
     .map((i) => createRef(null));
   // console.log(inputTextRef);
 
+
+const  startTimer = () => {
+
+  const intervalId = setInterval(timer, 1000);
+
+  function timer(){
+    setCountDown((prevCount)=> {
+      
+      if(prevCount ===1)
+      {
+        clearInterval(intervalId);
+        setCountDown(0)
+      }
+      else{
+        return prevCount-1;
+      }
+      
+      
+      });
+  }
+}
+
+
+
   const handleKeyDown = (e) => {
+
+      startTimer();
+
     let allChildrenSpans =
       wordSpanRef[currWordIndex].current.querySelectorAll("span");
 
@@ -55,7 +83,17 @@ function TypingBox({ words }) {
 
         if(currCharIndex === allChildrenSpans.length)
         {
-          allChildrenSpans[currCharIndex-1].className = 'char current'
+          
+          if(allChildrenSpans[currCharIndex-1].className.includes('extra')){
+            allChildrenSpans[currCharIndex-1].remove();
+            allChildrenSpans[currCharIndex-2].className += ' right';
+          }
+          else
+          {
+            allChildrenSpans[currCharIndex-1].className = 'char current'
+          }
+
+          
           setCurrCharIndex(currCharIndex -1);
           return;
         }
@@ -111,6 +149,7 @@ function TypingBox({ words }) {
 
   return (
     <>
+    <h1>{countDown}</h1>
       <div className="type-box" onClick={focusInput}>
         <div className="words">
           {/* Spans of words and chars */}
