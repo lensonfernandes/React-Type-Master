@@ -126,10 +126,12 @@ body{
 .upper-menu{
     display: flex;
     max-width:1000px;
+    width:100%;
     margin-left: auto;
     margin-right:auto;
     justify-content: space-between;
     font-size: 20px;
+    padding: 1rem;
     
 }
 
@@ -139,5 +141,14 @@ body{
 
 .time{
     margin-right: 15px;
+}
+
+.time:hover{
+    color:yellow;
+    cursor: pointer;
+}
+
+.counter{
+    cursor: none;
 }
 `;

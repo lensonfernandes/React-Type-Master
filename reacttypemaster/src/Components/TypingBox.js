@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, createRef, useState } from "react";
+import { useTestMode } from "../Context/TestMode";
 import UpperMenu from "./UpperMenu";
 
 function TypingBox({ words }) {
@@ -7,6 +8,9 @@ function TypingBox({ words }) {
   const [countDown, setCountDown] = useState(15)
   const [testStart, setTestStart] = useState(false)
   const [testOver, setTestOver] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
+
+  const {testTime} = useTestMode();
 
   const inputTextRef = useRef(null);
 
@@ -19,6 +23,7 @@ function TypingBox({ words }) {
 const  startTimer = () => {
 
   const intervalId = setInterval(timer, 1000);
+  setIntervalId(intervalId)
 
   function timer(){
     setCountDown((prevCount)=> {
@@ -145,9 +150,23 @@ if(!testStart){
     setCurrCharIndex(currCharIndex + 1);
   };
 
+const resetTest = () => {
+  setCurrCharIndex(0);
+  setCurrWordIndex(0);
+  setTestStart(false);
+  setTestOver(false);
+  clearInterval(intervalId);
+  setCountDown(testTime)
+}
+
   const focusInput = () => {
     inputTextRef.current.focus();
   };
+
+useEffect(()=>{
+  resetTest();
+
+},[testTime]);
 
   React.useEffect(() => {
     focusInput();
