@@ -151,4 +151,32 @@ body{
 .counter{
     cursor: none;
 }
+
+.stats-box{
+    display: flex;
+    max-width:1000px;
+    height: auto;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.left-box{
+    width:30%;
+    padding:30px;
+}
+
+.right-box{
+    width:70%;
+}
+
+.title{
+    font-size:20px;
+    color: black;
+
+}
+
+.subtitle{
+    
+}
+
 `;

@@ -1,23 +1,45 @@
-import React, { useRef, useEffect, createRef, useState } from "react";
+import React, { useRef, useEffect, createRef, useState, useMemo } from "react";
 import { useTestMode } from "../Context/TestMode";
+import Stats from "./Stats";
 import UpperMenu from "./UpperMenu";
 
-function TypingBox({ words }) {
+var randomWords = require('random-words');
+
+function TypingBox({ }) {
   const [currWordIndex, setCurrWordIndex] = useState(0);
   const [currCharIndex, setCurrCharIndex] = useState(0);
   const [countDown, setCountDown] = useState(15)
   const [testStart, setTestStart] = useState(false)
   const [testOver, setTestOver] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [correctChars, setCorrectChars] = useState(0);
+  const [correctWords, setCorrectWords] = useState(0);
+
+  const [wordsArray, setWordsArray] = useState(() => {
+    return randomWords(100);
+  });
+
+  const words = useMemo(()=>{
+
+      return wordsArray
+
+  }, [wordsArray]);
+
+
+  const  wordSpanRef = useMemo(() => {
+    return Array(words.length)
+    .fill(0)
+    .map((i) => createRef(null));
+  }, [words])
 
   const {testTime} = useTestMode();
 
   const inputTextRef = useRef(null);
 
-  const wordSpanRef = Array(words.length)
-    .fill(0)
-    .map((i) => createRef(null));
-  // console.log(inputTextRef);
+  // const wordSpanRef = Array(words.length)
+  //   .fill(0)
+  //   .map((i) => createRef(null));
+  // // console.log(inputTextRef);
 
 
 const  startTimer = () => {
@@ -65,6 +87,12 @@ if(!testStart){
     // console.log(e);
 
     if (e.keyCode === 32) {
+
+      const correctChar = wordSpanRef[currWordIndex].current.querySelectorAll('.correct');
+      if(correctChar.length===allChildrenSpans.length){
+        setCorrectWords(correctWords+1);
+
+      }
 
       //remove cursor from word when using space
         if(allChildrenSpans.length <= currCharIndex ){
@@ -137,6 +165,7 @@ if(!testStart){
     if (e.key === allChildrenSpans[currCharIndex].innerText) {
       console.log("Correct");
       allChildrenSpans[currCharIndex].className = "char correct";
+      setCorrectChars(correctChars +1);
     } else {
       console.log("Incorrect");
       allChildrenSpans[currCharIndex].className = "char incorrect";
@@ -156,15 +185,39 @@ const resetTest = () => {
   setTestStart(false);
   setTestOver(false);
   clearInterval(intervalId);
-  setCountDown(testTime)
+  setCountDown(testTime);
+  let random = randomWords(100);
+  setWordsArray(random)
+  resetWordSpanRefClassNames();
+
 }
 
+const calculateWPM = () => {
+
+  return Math.round((correctChars/5)/(testTime/60));
+
+}
+
+const calculateAccuracy = ()=>{
+  return Math.round((correctWords/currWordIndex)*100)
+}
+
+const resetWordSpanRefClassNames = () => {
+  wordSpanRef.map( i => {
+    Array.from(i.current.childNodes).map(j => j.className = 'char')
+
+  }
+   )
+
+   wordSpanRef[0].current.childNodes[0].className = 'char current';
+}
   const focusInput = () => {
     inputTextRef.current.focus();
   };
 
 useEffect(()=>{
   resetTest();
+
 
 },[testTime]);
 
@@ -176,7 +229,7 @@ useEffect(()=>{
   return (
     <>
     <UpperMenu countDown={countDown} />
-    {testOver ? <h1>TestOver</h1> : (<div className="type-box" onClick={focusInput}>
+    {testOver ? (<Stats wpm={calculateWPM()} accuracy={calculateAccuracy()}></Stats>) : (<div className="type-box" onClick={focusInput}>
         <div className="words">
           {/* Spans of words and chars */}
 
