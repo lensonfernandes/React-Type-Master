@@ -1,6 +1,18 @@
 import React from 'react'
+import Graph from './Graph'
 
-export default function Stats({wpm, accuracy}) {
+export default function Stats({wpm, accuracy, graphData, correctChars, incorrectChars, extraChars, missedChars}) {
+
+  var timeSet = new Set();
+  const newGraph = graphData.filter((i)=>{
+      if(!timeSet.has(i[0]))
+      {
+          timeSet.add(i[0]);
+          return i;
+
+      }
+  })
+
   return (
     <div className='=stats-box'>
         <div className='left-stats'>
@@ -9,11 +21,11 @@ export default function Stats({wpm, accuracy}) {
             <div className='title'>Accuracy</div>
             <div className='subtitle'>{accuracy}%</div>
             <div className='title'>Characters</div>
-            <div className='subtitle'>30/2/3/3</div>
+            <div className='subtitle'>{correctChars}/{incorrectChars}/{missedChars}/{extraChars}</div>
 
         </div>
         <div className='right-stats'>
-                graph here 
+                <Graph graphData={newGraph} />
         </div>
 
         
