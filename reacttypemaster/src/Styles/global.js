@@ -160,13 +160,23 @@ body{
     margin-right:auto;
 }
 
-.left-box{
+.left-stats{
     width:30%;
     padding:30px;
 }
 
-.right-box{
+.right-stats{
     width:70%;
+}
+
+.footer{
+    display: flex;
+    width:1000px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+    height: 60px;
+
 }
 
 .title{
