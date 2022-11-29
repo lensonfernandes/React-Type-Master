@@ -44,8 +44,8 @@ const AccountIcon = () => {
             </Tabs>
           </AppBar>
 
-          {value === 0 && <LoginForm />}
-          {value === 1 && <SignupForm/>}
+          {value === 0 && <LoginForm  handleClose={handleClose}/>}
+          {value === 1 && <SignupForm handleClose={handleClose}/>}
         </div>
       </Modal>
     </div>
