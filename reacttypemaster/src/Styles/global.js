@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
+
 export const GlobalStyles = createGlobalStyle`
 *,
 *::after,
@@ -8,10 +9,10 @@ export const GlobalStyles = createGlobalStyle`
 }
 
 body{
-    background:grey;
+    background:${({theme}) => theme.background};
     padding:0;
     margin: 0;
-    color: white;
+    color: ${({theme}) => theme.title};
     transition: all 0.25s linear;
 }
 
@@ -44,6 +45,7 @@ body{
     flex-wrap: wrap;
     align-content: center;
     width: 100%;
+    color: ${({theme}) => theme.typeBoxText};
 }
 
 
@@ -58,7 +60,7 @@ body{
 }
 
 .correct{
-    color: green;
+    color: ${({theme}) => theme.title};
 }
 
 .incorrect{
@@ -73,23 +75,23 @@ body{
 
     @keyframes blinking{
         0% {
-            border-left-color: #fff;
+            border-left-color: ${({theme}) => theme.title};
         }
 
         25% {
-            border-left-color: black;
+            border-left-color: ${({theme}) => theme.background};
         }
 
         50% {
-            border-left-color: #fff;
+            border-left-color: ${({theme}) => theme.title};
         }
 
         75% {
-            border-left-color: black;
+            border-left-color: ${({theme}) => theme.background};
         }
 
         100% {
-            border-left-color: #fff;
+            border-left-color: ${({theme}) => theme.title};
         }
     }
 }
@@ -102,23 +104,23 @@ body{
 
     @keyframes blinkingRight{
         0% {
-            border-right-color: #fff;
+            border-right-color: ${({theme}) => theme.title};
         }
 
         25% {
-            border-right-color: black;
+            border-right-color: ${({theme}) => theme.background};
         }
 
         50% {
-            border-right-color: #fff;
+            border-right-color: ${({theme}) => theme.title};
         }
 
         75% {
-            border-right-color: black;
+            border-right-color:${({theme}) => theme.background};
         }
 
         100% {
-            border-right-color: #fff;
+            border-right-color: ${({theme}) => theme.title};
         }
     }
 }
@@ -132,6 +134,7 @@ body{
     justify-content: space-between;
     font-size: 20px;
     padding: 1rem;
+    color: ${({theme}) => theme.typeBoxText};
     
 }
 
@@ -144,7 +147,7 @@ body{
 }
 
 .time:hover{
-    color:yellow;
+    color:${({theme}) => theme.title};
     cursor: pointer;
 }
 
@@ -169,7 +172,7 @@ body{
     width:70%;
 }
 
-.footer{
+.footer , .header{
     display: flex;
     width:1000px;
     margin-left: auto;
@@ -181,11 +184,13 @@ body{
 
 .title{
     font-size:20px;
-    color: black;
+    color: ${({theme}) => theme.typeBoxText};
 
 }
 
 .subtitle{
+    font-size: 30px;
+    color: ${({theme}) => theme.title};
     
 }
 
