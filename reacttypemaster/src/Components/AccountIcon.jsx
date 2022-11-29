@@ -35,10 +35,12 @@ const AccountIcon = () => {
 
       <Modal open={open} onClose={handleClose} className={classes.modal}>
         <div className={classes.box}>
-          <AppBar position="static">
+          <AppBar position="static"
+            style={{backgroundColor:'transparent'}}
+          >
             <Tabs value={value} onChange={handleValueChange} variant="fullWidth">
-              <Tab label="login"></Tab>
-              <Tab label="signup"></Tab>
+              <Tab label="login" style={{ color:'white'}}></Tab>
+              <Tab label="signup" style={{ color:'white'}}></Tab>
             </Tabs>
           </AppBar>
 
