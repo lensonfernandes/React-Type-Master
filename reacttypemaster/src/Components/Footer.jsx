@@ -24,7 +24,8 @@ const Footer = () => {
              onChange = {handleThemeChange}
              defaultValue={{value: defaultTheme, label:defaultTheme.label}}
              styles={{
-                control: (styles) => ({...styles, backgroundColor: theme.background})
+                control: (styles) => ({...styles, backgroundColor: theme.background}),
+                menu: (styles)=>({...styles, backgroundColor: theme.background})
              }}
             
             />

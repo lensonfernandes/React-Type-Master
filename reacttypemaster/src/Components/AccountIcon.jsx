@@ -3,6 +3,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { AppBar, Modal, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { makeStyles } from "@mui/styles";
+import LoginForm from "./LoginForm";
 
 const useStyles = makeStyles(() => ({
   modal: {
@@ -40,7 +41,7 @@ const AccountIcon = () => {
             </Tabs>
           </AppBar>
 
-          {value === 0 && <h1>LoginComponents</h1>}
+          {value === 0 && <LoginForm />}
           {value === 1 && <h1>SignUpComponents</h1>}
         </div>
       </Modal>
