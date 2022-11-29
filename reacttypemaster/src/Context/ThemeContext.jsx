@@ -18,7 +18,8 @@ export const ThemeContextProvider = ({children}) => {
     const values = {
 
         theme,
-        setTheme
+        setTheme,
+        defaultTheme
 
     };
 

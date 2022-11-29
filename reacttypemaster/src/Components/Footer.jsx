@@ -5,7 +5,7 @@ import {useTheme} from '../Context/ThemeContext'
 
 const Footer = () => {
 
-    const {setTheme} = useTheme();
+    const {setTheme, defaultTheme, theme} = useTheme();
 
     const handleThemeChange = (e) => {
         // console.log(e.value);
@@ -22,7 +22,10 @@ const Footer = () => {
              options={themeOptions}
              menuPlacement='top'
              onChange = {handleThemeChange}
-            //  defaultValue={{}}
+             defaultValue={{value: defaultTheme, label:defaultTheme.label}}
+             styles={{
+                control: (styles) => ({...styles, backgroundColor: theme.background})
+             }}
             
             />
         </div>
