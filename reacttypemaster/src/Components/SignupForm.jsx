@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Button, TextField } from '@mui/material'
 
-const LoginForm = () => {
+const SignupForm = () => {
   return (
     <Box
         p={3}
@@ -26,15 +26,21 @@ const LoginForm = () => {
             label='Enter Password'
          >
         </TextField>
+        <TextField
+            variant='outlined'
+            type='password'
+            label='Confirm Password'
+         >
+        </TextField>
         <Button
             variant='contained'
             size='large'
             style={{background: 'red'}}
         >
-            Login
+            Signup
         </Button>
     </Box>
   )
 }
 
-export default LoginForm
+export default SignupForm

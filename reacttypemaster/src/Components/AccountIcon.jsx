@@ -4,6 +4,7 @@ import { AppBar, Modal, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 const useStyles = makeStyles(() => ({
   modal: {
@@ -42,7 +43,7 @@ const AccountIcon = () => {
           </AppBar>
 
           {value === 0 && <LoginForm />}
-          {value === 1 && <h1>SignUpComponents</h1>}
+          {value === 1 && <SignupForm/>}
         </div>
       </Modal>
     </div>
