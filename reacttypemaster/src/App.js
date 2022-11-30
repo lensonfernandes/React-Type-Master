@@ -10,16 +10,23 @@ import {Routes, Route} from 'react-router-dom'
 import HomePage from "./Pages/HomePage";
 import UserPage from './Pages/UserPage';
 // import { useTheme } from "./Context/ThemeContext";
+import Alert from './Components/Alert'
 
 function App() {
 
 
   return (
+
+    <>
+    <Alert />
     <Routes>
       <Route path='/' element={<HomePage/>}></Route>
       <Route path='/user' element={<UserPage />}></Route>
 
     </Routes>
+
+
+    </>
 
   )
 }

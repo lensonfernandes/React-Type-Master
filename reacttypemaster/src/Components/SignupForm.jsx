@@ -1,6 +1,8 @@
 import React , {useState} from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import {auth} from '../firebaseConfig'
+import errorMapping from '../utils/errorMessages'
+import {useAlert} from '../Context/AlertContext'
 
 const SignupForm = ({handleClose}) => {
 
@@ -9,24 +11,50 @@ const SignupForm = ({handleClose}) => {
     const [confirmPassword, setConfirmPassword] = useState("");
 
 
+    const {setAlert} = useAlert();
+
+
     const handleSubmit = () => {
         if(!email || !password || !confirmPassword){
-            alert("Enter All Details");
+            
+            setAlert({
+                open: true,
+                type:'warning',
+                message:"Please enter all fields"
+            });
             return;
         }
 
         if(password !==confirmPassword)
         {
-            alert("Password mismatch")
+            
+            setAlert({
+                open: true,
+                type:'warning',
+                message:"Password mismatch"
+            });
             return;
         }
 
         auth.createUserWithEmailAndPassword(email, password).then((ok)=>{
-            alert("user created");
+            // alert("user created");
+            
+            setAlert({
+                open: true,
+                type:'success',
+                message:"Signup Successful"
+            });
             handleClose();
 
         }).catch((err)=>{
-            alert('Unable to create account');
+            // alert('Unable to create account');
+            // alert(errorMapping[err.code] || "Unknown error");
+
+            setAlert({
+                open: true,
+                type:'error',
+                message:errorMapping[err.code] || "Some error occured"
+            });
         })
     }
 

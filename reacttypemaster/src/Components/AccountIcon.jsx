@@ -1,6 +1,6 @@
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { AppBar, Modal, Tab, Tabs } from "@mui/material";
+import { AppBar, Modal, Tab, Tabs, Box } from "@mui/material";
 import { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import LoginForm from "./LoginForm";
@@ -9,6 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import { auth } from "../firebaseConfig";
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useNavigate} from 'react-router-dom'
+import GoogleButton from 'react-google-button'
 
 const useStyles = makeStyles(() => ({
   modal: {
@@ -74,6 +75,12 @@ const handleAccountIconClick = () => {
 
           {value === 0 && <LoginForm  handleClose={handleClose}/>}
           {value === 1 && <SignupForm handleClose={handleClose}/>}
+
+<Box>
+    <span>OR</span>
+    <GoogleButton />
+  </Box>
+
         </div>
       </Modal>
     </div>
