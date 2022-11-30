@@ -8,6 +8,7 @@ import SignupForm from "./SignupForm";
 import LogoutIcon from '@mui/icons-material/Logout'
 import { auth } from "../firebaseConfig";
 import {useAuthState} from 'react-firebase-hooks/auth';
+import {useNavigate} from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   modal: {
@@ -19,6 +20,8 @@ const useStyles = makeStyles(() => ({
     width: 400,
   },
 }));
+
+
 
 const AccountIcon = () => {
   const [open, setOpen] = useState(false);
@@ -41,9 +44,21 @@ const logout = () => {
   })
 }
 
+const navigate = useNavigate();
+
+const handleAccountIconClick = () => {
+  if(user){
+    navigate('/user');
+  }
+  else
+  {
+    setOpen(true)
+  }
+}
+
   return (
     <div> 
-      <AccountCircleIcon onClick={()=>{setOpen(true)}}/>
+      <AccountCircleIcon onClick={handleAccountIconClick}/>
       {(user) && <LogoutIcon onClick={logout} style={{marginLeft: '5px'}}/>}
 
       <Modal open={open} onClose={handleClose} className={classes.modal}>
