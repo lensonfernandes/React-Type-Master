@@ -7,3 +7,5 @@
 #38min
 #47min
 #52min
+#1hr 7min
+#1hr 13min

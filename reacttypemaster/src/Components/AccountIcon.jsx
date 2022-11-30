@@ -5,6 +5,9 @@ import { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import LogoutIcon from '@mui/icons-material/Logout'
+import { auth } from "../firebaseConfig";
+import {useAuthState} from 'react-firebase-hooks/auth';
 
 const useStyles = makeStyles(() => ({
   modal: {
@@ -28,10 +31,13 @@ const AccountIcon = () => {
   const handleClose = () => setOpen(false);
 
   const classes = useStyles();
+  const [user] = useAuthState(auth);
+
 
   return (
     <div>
       <AccountCircleIcon onClick={()=>{setOpen(true)}}/>
+      {(user) && <LogoutIcon />}
 
       <Modal open={open} onClose={handleClose} className={classes.modal}>
         <div className={classes.box}>

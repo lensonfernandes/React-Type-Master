@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Box, Button, TextField } from '@mui/material'
+import {auth} from '../firebaseConfig'
 
-const LoginForm = () => {
+const LoginForm = ({handleClose}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,7 +13,13 @@ const LoginForm = () => {
             alert("Enter all details");
             return;
         }
-        console.log(email, password);
+        auth.signInWithEmailAndPassword(email, password).then((ok)=>{
+            alert("Logged In");
+            handleClose();
+        }).catch((err)=>{
+            alert("Not able to login");
+            console.log(err);
+        })
     }
 
   return (
