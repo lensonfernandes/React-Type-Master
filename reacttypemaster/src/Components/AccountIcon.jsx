@@ -33,11 +33,18 @@ const AccountIcon = () => {
   const classes = useStyles();
   const [user] = useAuthState(auth);
 
+const logout = () => {
+  auth.signOut().then((ok)=>{
+    alert("Logged out");
+  }).catch((err)=>{
+    alert('Something went wrong')
+  })
+}
 
   return (
-    <div>
+    <div> 
       <AccountCircleIcon onClick={()=>{setOpen(true)}}/>
-      {(user) && <LogoutIcon />}
+      {(user) && <LogoutIcon onClick={logout} style={{marginLeft: '5px'}}/>}
 
       <Modal open={open} onClose={handleClose} className={classes.modal}>
         <div className={classes.box}>
