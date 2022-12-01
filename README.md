@@ -5,3 +5,4 @@
 #36min
 #43min
 #54min
+#1hr 30min

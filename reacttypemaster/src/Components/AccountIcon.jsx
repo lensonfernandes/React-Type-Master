@@ -10,15 +10,23 @@ import { auth } from "../firebaseConfig";
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useNavigate} from 'react-router-dom'
 import GoogleButton from 'react-google-button'
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAlert } from "../Context/AlertContext";
+import {useTheme} from "../Context/ThemeContext"
+
 
 const useStyles = makeStyles(() => ({
   modal: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    backdropFilter: 'blur(2px)'
   },
   box: {
     width: 400,
+    alignItems:'center' ,
+    textAlign:'center',
+    border: '1px solid'
   },
 }));
 
@@ -32,20 +40,32 @@ const AccountIcon = () => {
     setValue(v);
   };
 
+
   const handleClose = () => setOpen(false);
 
+  
   const classes = useStyles();
   const [user] = useAuthState(auth);
 
 const logout = () => {
   auth.signOut().then((ok)=>{
-    alert("Logged out");
+    setAlert({
+      open: true,
+      type: 'success',
+      message:'Logged Out'
+    })
   }).catch((err)=>{
-    alert('Something went wrong')
+    setAlert({
+      open: true,
+      type: 'error',
+      message:'Not able to Log Out '
+    })
   })
 }
 
 const navigate = useNavigate();
+
+const {theme} = useTheme();
 
 const handleAccountIconClick = () => {
   if(user){
@@ -55,6 +75,27 @@ const handleAccountIconClick = () => {
   {
     setOpen(true)
   }
+}
+
+const {setAlert} =useAlert();
+const googleProvider  = new GoogleAuthProvider();
+
+const signInWithGoogle = () => {
+  signInWithPopup(auth, googleProvider).then((res)=>{
+    setAlert({
+      open: true,
+      type: 'success',
+      message: 'Logged In'
+    });
+    handleClose();
+  }).catch((err)=>{
+    console.log(err);
+    setAlert({
+      open: true,
+      type:'error',
+      message:'Unable to use Google Authentication'
+    });
+  })
 }
 
   return (
@@ -68,17 +109,20 @@ const handleAccountIconClick = () => {
             style={{backgroundColor:'transparent'}}
           >
             <Tabs value={value} onChange={handleValueChange} variant="fullWidth">
-              <Tab label="login" style={{ color:'white'}}></Tab>
-              <Tab label="signup" style={{ color:'white'}}></Tab>
+              <Tab label="login" style={{ color:theme.title}}></Tab>
+              <Tab label="signup" style={{ color:theme.title}}></Tab>
             </Tabs>
           </AppBar>
 
           {value === 0 && <LoginForm  handleClose={handleClose}/>}
           {value === 1 && <SignupForm handleClose={handleClose}/>}
 
-<Box>
-    <span>OR</span>
-    <GoogleButton />
+<Box className={classes.box}>
+    <span style={{display:'block' , padding: '1rem'}}>OR</span>
+    <GoogleButton 
+      style={{width:'100%'}}
+      onClick={signInWithGoogle}
+    />
   </Box>
 
         </div>

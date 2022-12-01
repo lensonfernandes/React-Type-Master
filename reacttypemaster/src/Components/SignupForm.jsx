@@ -3,6 +3,7 @@ import { Box, Button, TextField } from '@mui/material'
 import {auth} from '../firebaseConfig'
 import errorMapping from '../utils/errorMessages'
 import {useAlert} from '../Context/AlertContext'
+import { useTheme } from '../Context/ThemeContext'
 
 const SignupForm = ({handleClose}) => {
 
@@ -57,7 +58,7 @@ const SignupForm = ({handleClose}) => {
             });
         })
     }
-
+    const {theme} = useTheme();
   return (
     <Box
         p={3}
@@ -65,7 +66,7 @@ const SignupForm = ({handleClose}) => {
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             padding: 10
         }}
     >
@@ -74,6 +75,18 @@ const SignupForm = ({handleClose}) => {
             type='email'
             label='Enter Email'
             onChange={(e)=>setEmail(e.target.value)}
+            InputLabelProps={
+                {
+                    style:{
+                        color:theme.title
+                    }
+                }
+            }
+            InputProps={{
+                style:{
+                    color: theme.title
+                }
+            }}
         >
 
         </TextField>
@@ -82,6 +95,18 @@ const SignupForm = ({handleClose}) => {
             type='password'
             label='Enter Password'
             onChange={(e)=>setPassword(e.target.value)}
+              InputLabelProps={
+                {
+                    style:{
+                        color:theme.title
+                    }
+                }
+            }
+            InputProps={{
+                style:{
+                    color: theme.title
+                }
+            }}
          >
         </TextField>
         <TextField
@@ -89,12 +114,24 @@ const SignupForm = ({handleClose}) => {
             type='password'
             label='Confirm Password'
             onChange={(e)=>setConfirmPassword(e.target.value)}
+            InputLabelProps={
+                {
+                    style:{
+                        color:theme.title
+                    }
+                }
+            }
+            InputProps={{
+                style:{
+                    color: theme.title
+                }
+            }}
          >
         </TextField>
         <Button
             variant='contained'
             size='large'
-            style={{background: 'red'}}
+            style={{background: theme.title, color: theme.background}}
             onClick={handleSubmit}
         >
             Signup
