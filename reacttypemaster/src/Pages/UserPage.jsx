@@ -9,6 +9,7 @@ import {
   TableBody,
   TableContainer,
   TableHead,
+  CircularProgress,
 } from "@mui/material";
 import { useEffect } from "react";
 
@@ -48,7 +49,7 @@ useEffect(()=>{
 
 
 if(loading){
-  return <h1> Loading...</h1>
+  return (<CircularProgress size={150}/>)
 }
 
   return (
