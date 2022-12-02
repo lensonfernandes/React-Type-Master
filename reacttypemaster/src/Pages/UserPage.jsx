@@ -1,6 +1,7 @@
 import React , {useState} from "react";
 import {db, auth} from '../firebaseConfig'
 import { useAuthState } from "react-firebase-hooks/auth";
+import Graph from "../Components/Graph";
 
 import {
   Table,
@@ -16,12 +17,18 @@ import { useEffect } from "react";
 const UserPage = () => {
 
   const [data, setData] = useState([]);
+  const [graphData, setGraphData] = useState([]);
 
   const [user, loading] = useAuthState(auth);
 
-const fetchUserData = () => {
+
+const fetchUserData = () => 
+{
+
   const resultRef = db.collection("Results");
   let tempData = [];
+
+let tempGraphData = [];
   const {uid} = auth.currentUser;
   // console.log(resultRef);
   // console.log(tempData);
@@ -32,9 +39,11 @@ const fetchUserData = () => {
   resultRef.where('userID' , '==', uid).get().then((snapshot)=>{
       snapshot.docs.forEach((doc)=>{
         tempData.push({...doc.data()})
+        tempGraphData.push([doc.data().timeStamp, doc.data().wpm])
       })
       // console.log(tempData)
       setData(tempData);
+      setGraphData(tempGraphData);
   })
 
 
@@ -54,6 +63,7 @@ if(loading){
 
   return (
     <div className="canvas">
+      <Graph graphData = {graphData} type='date' />
       <div className="table">
         <TableContainer>
           <Table>
